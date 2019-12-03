@@ -29,14 +29,9 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
+
 
 import org.firstinspires.ftc.robotcore.external.Const;
 
@@ -57,43 +52,15 @@ import org.firstinspires.ftc.robotcore.external.Const;
 @TeleOp(name="Drive OpMode")
 public class DriveOpMode extends OpMode
 {
-    private DcMotor lFDrive;
-    private DcMotorSimple lBDrive;
-    private DcMotor rFDrive;
-    private DcMotorSimple rBDrive;
-
-    private DcMotor elevator;
-    private DcMotor turret;
-    private DcMotorSimple folder;
+    private Robot robot;
 
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init() {
-        lFDrive  = hardwareMap.get(DcMotor.class, "LFDrive");
-        lBDrive  = hardwareMap.get(DcMotorSimple.class, "LBDrive");
-        rFDrive  = hardwareMap.get(DcMotor.class, "RFDrive");
-        rBDrive  = hardwareMap.get(DcMotorSimple.class, "RBDrive");
 
-        elevator = hardwareMap.get(DcMotor.class, "Elevator");
-        turret = hardwareMap.get(DcMotor.class, "Turret");
-        folder = hardwareMap.get(DcMotorSimple.class, "Folder");
-
-        lFDrive.resetDeviceConfigurationForOpMode();
-        lBDrive.resetDeviceConfigurationForOpMode();
-        rFDrive.resetDeviceConfigurationForOpMode();
-        rBDrive.resetDeviceConfigurationForOpMode();
-
-        lFDrive.setDirection(DcMotor.Direction.REVERSE);
-        rBDrive.setDirection(DcMotor.Direction.REVERSE);
-
-        elevator.resetDeviceConfigurationForOpMode();
-        elevator.setDirection(DcMotor.Direction.REVERSE);
-
-        turret.resetDeviceConfigurationForOpMode();
-
-        folder.resetDeviceConfigurationForOpMode();
+        robot = new Robot(hardwareMap);
 
         telemetry.addData("Status", "Initialized");
     }
@@ -134,50 +101,41 @@ public class DriveOpMode extends OpMode
         }
 
         if(strafeSpeed != 0) {
-            lFDrive.setPower(strafeSpeed);
-            lBDrive.setPower(-strafeSpeed);
-            rFDrive.setPower(strafeSpeed);
-            rBDrive.setPower(-strafeSpeed);
+            robot.drive.strafe(strafeSpeed);
         } else {
             double lSpeed = -gamepad1.left_stick_y;
             double rSpeed = -gamepad1.right_stick_y;
-            lFDrive.setPower(lSpeed);
-            lBDrive.setPower(lSpeed);
-            rFDrive.setPower(rSpeed);
-            rBDrive.setPower(rSpeed);
+
+            robot.drive.move(lSpeed, rSpeed);
         }
 
         // Elevator control
-        if(gamepad2.dpad_up && elevator.getCurrentPosition() < Constants.kElevatorMax) {
-            elevator.setPower(Constants.kElevatorUpSpeed);
-        } else if(gamepad2.dpad_down && elevator.getCurrentPosition() > Constants.kElevatorMin) {
-            elevator.setPower(Constants.kElevatorDownSpeed);
+        if(gamepad2.dpad_up) {
+            robot.elevator.move(Constants.kElevatorUpSpeed);
+        } else if(gamepad2.dpad_down) {
+            robot.elevator.move(Constants.kElevatorDownSpeed);
         } else {
-            elevator.setPower(0);
+            robot.elevator.move(0);
         }
 
         // Turret control
         if(gamepad2.dpad_left) {
-            turret.setPower(Constants.kTurretSpeed);
+            robot.turret.move(Constants.kTurretSpeed);
         } else if(gamepad2.dpad_right) {
-            turret.setPower(-Constants.kTurretSpeed);
+            robot.turret.move(-Constants.kTurretSpeed);
         } else {
-            turret.setPower(0);
+            robot.turret.move(0);
         }
 
         // Folder control
         if(gamepad2.y) {
-            folder.setPower(Constants.kFolderUpSpeed);
+            robot.folder.move(Constants.kFolderUpSpeed);
         } else if(gamepad2.a) {
-            folder.setPower(Constants.kFolderDownSpeed);
+            robot.folder.move(Constants.kFolderDownSpeed);
         } else {
-            folder.setPower(0);
+            robot.folder.move(0);
         }
 
-        telemetry.addData("LF position: ", lFDrive.getCurrentPosition());
-        telemetry.addData("RF position: ", rFDrive.getCurrentPosition());
-        telemetry.addData("Elevator position: ", elevator.getCurrentPosition());
-        telemetry.addData("Turret position: ", turret.getCurrentPosition());
     }
 
     /*
@@ -185,14 +143,7 @@ public class DriveOpMode extends OpMode
      */
     @Override
     public void stop() {
-        lFDrive.setPower(0);
-        lBDrive.setPower(0);
-        rFDrive.setPower(0);
-        rBDrive.setPower(0);
-
-        elevator.setPower(0);
-        turret.setPower(0);
-        folder.setPower(0);
+        robot.stop();
     }
 
 }
