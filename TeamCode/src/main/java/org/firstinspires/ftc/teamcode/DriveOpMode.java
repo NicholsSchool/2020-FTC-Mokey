@@ -119,11 +119,8 @@ public class DriveOpMode extends OpMode
     @Override
     public void loop() {
 
-        double strafeSpeed = 0;
-        double lSpeed = -gamepad1.left_stick_y;
-        double rSpeed = -gamepad1.right_stick_y;
-
         // Tank drive and strafe
+        double strafeSpeed;
         if(gamepad1.left_bumper) {
             strafeSpeed = Constants.kSlowStrafeSpeed;
         } else if(gamepad1.right_bumper) {
@@ -132,6 +129,8 @@ public class DriveOpMode extends OpMode
             strafeSpeed = Constants.kFastStrafeSpeed;
         } else if(gamepad1.right_trigger > Constants.kTriggerThreshold) {
             strafeSpeed = -Constants.kFastStrafeSpeed;
+        } else {
+            strafeSpeed = 0;
         }
 
         if(strafeSpeed != 0) {
@@ -140,37 +139,45 @@ public class DriveOpMode extends OpMode
             rFDrive.setPower(strafeSpeed);
             rBDrive.setPower(-strafeSpeed);
         } else {
+            double lSpeed = -gamepad1.left_stick_y;
+            double rSpeed = -gamepad1.right_stick_y;
             lFDrive.setPower(lSpeed);
             lBDrive.setPower(lSpeed);
             rFDrive.setPower(rSpeed);
             rBDrive.setPower(rSpeed);
         }
 
-        if(gamepad1.dpad_up && elevator.getCurrentPosition() < Constants.kElevatorMax) {
+        // Elevator control
+        if(gamepad2.dpad_up && elevator.getCurrentPosition() < Constants.kElevatorMax) {
             elevator.setPower(Constants.kElevatorUpSpeed);
-        } else if(gamepad1.dpad_down && elevator.getCurrentPosition() > Constants.kElevatorMin) {
+        } else if(gamepad2.dpad_down && elevator.getCurrentPosition() > Constants.kElevatorMin) {
             elevator.setPower(Constants.kElevatorDownSpeed);
         } else {
             elevator.setPower(0);
         }
 
-        if(gamepad1.dpad_left) {
+        // Turret control
+        if(gamepad2.dpad_left) {
             turret.setPower(Constants.kTurretSpeed);
-        } else if(gamepad1.dpad_right) {
+        } else if(gamepad2.dpad_right) {
             turret.setPower(-Constants.kTurretSpeed);
         } else {
             turret.setPower(0);
         }
 
-        if(gamepad1.y) {
+        // Folder control
+        if(gamepad2.y) {
             folder.setPower(Constants.kFolderUpSpeed);
-        } else if(gamepad1.a) {
+        } else if(gamepad2.a) {
             folder.setPower(Constants.kFolderDownSpeed);
         } else {
             folder.setPower(0);
         }
 
+        telemetry.addData("LF position: ", lFDrive.getCurrentPosition());
+        telemetry.addData("RF position: ", rFDrive.getCurrentPosition());
         telemetry.addData("Elevator position: ", elevator.getCurrentPosition());
+        telemetry.addData("Turret position: ", turret.getCurrentPosition());
     }
 
     /*
