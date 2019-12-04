@@ -15,15 +15,35 @@ public class Elevator {
         elevator.resetDeviceConfigurationForOpMode();
 
         elevator.setDirection(DcMotor.Direction.REVERSE);
+
+        resetEncoder();
     }
 
     public void move(double speed) {
+        elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         if(elevator.getCurrentPosition() < Constants.kElevatorMax && speed > 0) {
             elevator.setPower(speed);
-        }
-        if(elevator.getCurrentPosition() > Constants.kElevatorMin && speed < 0) {
+        } else if(elevator.getCurrentPosition() > Constants.kElevatorMin && speed < 0) {
             elevator.setPower(speed);
+        } else {
+            elevator.setPower(0);
         }
+    }
+
+    public void move(int position, double power) {
+        elevator.setTargetPosition(position);
+        elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        elevator.setPower(power);
+    }
+
+    public boolean isBusy() {
+        return elevator.isBusy();
+    }
+
+    public void resetEncoder() {
+        elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void stop() {

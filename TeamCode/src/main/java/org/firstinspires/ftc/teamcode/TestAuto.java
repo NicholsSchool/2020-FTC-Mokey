@@ -76,12 +76,18 @@ public class TestAuto extends LinearOpMode {
         waitForStart();
 
 
-        while(robot.drive.move(2000, 1.0) && opModeIsActive()) {
+        while(robot.drive.move(1000, 1.0) && opModeIsActive()) {
             robot.drive.debug(telemetry);
         }
 
+        robot.drive.resetIMU();
+        while(robot.drive.turn(-90.0, 0.7) && opModeIsActive()) {
+            robot.drive.debug(telemetry);
+        }
 
         robot.stop();
+
+        sleep(2000);
     }
 
 }

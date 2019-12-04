@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -17,6 +18,9 @@ public class Drive {
     private DcMotor rFDrive;
     private DcMotorSimple rBDrive;
 
+    private BNO055IMU imu;
+    private float orientationZero;
+
     public Drive(HardwareMap hardwareMap) {
         lFDrive  = hardwareMap.get(DcMotor.class, "LFDrive");
         lBDrive  = hardwareMap.get(DcMotorSimple.class, "LBDrive");
@@ -30,6 +34,13 @@ public class Drive {
 
         lFDrive.setDirection(DcMotor.Direction.REVERSE);
         rBDrive.setDirection(DcMotor.Direction.REVERSE);
+
+
+        imu = hardwareMap.get(BNO055IMU.class, "IMU");
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        imu.initialize(parameters);
 
         resetEncoders();
     }
@@ -67,11 +78,32 @@ public class Drive {
         }
     }
 
+    public boolean turn(double angle, double speed) {
+        float currentAngle = (imu.getAngularOrientation().firstAngle - orientationZero) % 180;
+
+        speed *= currentAngle < angle ? 1 : -1;
+
+        if(Math.abs(currentAngle - angle) > Constants.kAngleTargetMargin) {
+            lFDrive.setPower(-speed);
+            lBDrive.setPower(-speed);
+            rFDrive.setPower(speed);
+            rBDrive.setPower(speed);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void resetEncoders() {
         lFDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rFDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public void resetIMU() {
+        orientationZero = imu.getAngularOrientation().firstAngle;
     }
 
     public void stop() {
@@ -86,6 +118,9 @@ public class Drive {
         telemetry.addData("LF power", lFDrive.getPower());
         telemetry.addData("LF isBusy", lFDrive.isBusy());
         telemetry.addData("RF position", rFDrive.getCurrentPosition());
+        telemetry.addData("IMU angle 1", imu.getAngularOrientation().firstAngle);
+        telemetry.addData("IMU angle 2", imu.getAngularOrientation().secondAngle);
+        telemetry.addData("IMU angle 3", imu.getAngularOrientation().thirdAngle);
         telemetry.update();
     }
 
