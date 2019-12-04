@@ -136,6 +136,7 @@ public class DriveOpMode extends OpMode
             robot.folder.move(0);
         }
 
+        robot.drive.debug(telemetry);
     }
 
     /*

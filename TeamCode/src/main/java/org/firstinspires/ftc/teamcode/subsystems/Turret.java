@@ -23,6 +23,7 @@ public class Turret {
     }
 
     public void debug(Telemetry telemetry) {
-        telemetry.addData("Turret position: ", turret.getCurrentPosition());
+        telemetry.addData("Turret position", turret.getCurrentPosition());
+        telemetry.update();
     }
 }

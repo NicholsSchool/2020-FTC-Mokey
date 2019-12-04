@@ -1,10 +1,14 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Constants;
 
 public class Drive {
 
@@ -26,9 +30,12 @@ public class Drive {
 
         lFDrive.setDirection(DcMotor.Direction.REVERSE);
         rBDrive.setDirection(DcMotor.Direction.REVERSE);
+
+        resetEncoders();
     }
 
     public void move(double lSpeed, double rSpeed) {
+
         lFDrive.setPower(lSpeed);
         lBDrive.setPower(lSpeed);
         rFDrive.setPower(rSpeed);
@@ -43,6 +50,30 @@ public class Drive {
         rBDrive.setPower(-speed);
     }
 
+    public boolean move(int position, double speed) {
+        int currentPosition = (lFDrive.getCurrentPosition() + rFDrive.getCurrentPosition()) / 2;
+
+        speed *= currentPosition < position ? 1 : -1;
+
+        if(Math.abs(currentPosition - position) > Constants.kEncoderTargetMargin) {
+            lFDrive.setPower(speed);
+            lBDrive.setPower(speed);
+            rFDrive.setPower(speed);
+            rBDrive.setPower(speed);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void resetEncoders() {
+        lFDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rFDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
     public void stop() {
         lFDrive.setPower(0);
         lBDrive.setPower(0);
@@ -51,8 +82,11 @@ public class Drive {
     }
 
     public void debug(Telemetry telemetry) {
-        telemetry.addData("LF position: ", lFDrive.getCurrentPosition());
-        telemetry.addData("RF position: ", rFDrive.getCurrentPosition());
+        telemetry.addData("LF position", lFDrive.getCurrentPosition());
+        telemetry.addData("LF power", lFDrive.getPower());
+        telemetry.addData("LF isBusy", lFDrive.isBusy());
+        telemetry.addData("RF position", rFDrive.getCurrentPosition());
+        telemetry.update();
     }
 
 }

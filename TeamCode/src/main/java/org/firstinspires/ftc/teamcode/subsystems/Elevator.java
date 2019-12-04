@@ -31,6 +31,7 @@ public class Elevator {
     }
 
     public void debug(Telemetry telemetry) {
-        telemetry.addData("Elevator position: ", elevator.getCurrentPosition());
+        telemetry.addData("Elevator position", elevator.getCurrentPosition());
+        telemetry.update();
     }
 }
