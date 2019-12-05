@@ -13,6 +13,8 @@ public class Turret {
     public Turret(HardwareMap hardwareMap) {
         turret = hardwareMap.get(DcMotor.class, "Turret");
         turret.resetDeviceConfigurationForOpMode();
+
+        resetEncoder();
     }
 
     public void move(double speed) {
@@ -41,8 +43,11 @@ public class Turret {
         move(0.0);
     }
 
+    public void resetEncoder() {
+        turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
     public void debug(Telemetry telemetry) {
         telemetry.addData("Turret position", turret.getCurrentPosition());
-        telemetry.update();
     }
 }

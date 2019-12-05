@@ -38,6 +38,5 @@ public class Imu {
         telemetry.addData("IMU angle 1", imu.getAngularOrientation().firstAngle);
         telemetry.addData("IMU angle 2", imu.getAngularOrientation().secondAngle);
         telemetry.addData("IMU angle 3", imu.getAngularOrientation().thirdAngle);
-        telemetry.update();
     }
 }

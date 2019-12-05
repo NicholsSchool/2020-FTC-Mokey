@@ -110,7 +110,6 @@ public class Drive {
         telemetry.addData("LF power", lFDrive.getPower());
         telemetry.addData("LF isBusy", lFDrive.isBusy());
         telemetry.addData("RF position", rFDrive.getCurrentPosition());
-        telemetry.update();
     }
 
 }

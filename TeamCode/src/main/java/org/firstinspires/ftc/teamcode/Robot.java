@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.sensors.Imu;
+import org.firstinspires.ftc.teamcode.sensors.Touch;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
 import org.firstinspires.ftc.teamcode.subsystems.Folder;
@@ -17,6 +18,9 @@ public class Robot {
 
     public static Imu imu;
 
+    public static Touch folderDown;
+    public static Touch folderUp;
+
     public static void init(HardwareMap hardwareMap) {
         drive = new Drive(hardwareMap);
         elevator = new Elevator(hardwareMap);
@@ -24,6 +28,9 @@ public class Robot {
         folder = new Folder(hardwareMap);
 
         imu = new Imu(hardwareMap);
+
+        folderDown = new Touch(hardwareMap, "FolderDown");
+        folderUp = new Touch(hardwareMap, "FolderUp");
     }
 
     public static void stop() {
