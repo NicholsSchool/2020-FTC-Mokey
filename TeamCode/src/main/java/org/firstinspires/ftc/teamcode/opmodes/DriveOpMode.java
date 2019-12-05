@@ -123,10 +123,7 @@ public class DriveOpMode extends OpMode
             Robot.folder.move(0);
         }
 
-        Robot.elevator.debug(telemetry);
-        Robot.folderDown.debug(telemetry);
-        Robot.folderUp.debug(telemetry);
-        Robot.turret.debug(telemetry);
+        Robot.drive.debug(telemetry);
     }
 
     /*

@@ -39,7 +39,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 
 
 @Autonomous(name="Unfold Test")
-public class UnfoldTest extends LinearOpMode {
+public class UnfoldTestAuto extends LinearOpMode {
 
 
 

@@ -5,6 +5,9 @@ public class Constants {
 
     public static final double kSlowStrafeSpeed = 0.5;
     public static final double kFastStrafeSpeed = 1.0;
+    public static final int kTicksPerDriveRotation = 1120;
+    public static final double kDriveWheelDiameter = 3.92;
+    public static final double kTicksPerInch = kTicksPerDriveRotation / (Math.PI * kDriveWheelDiameter);
 
     public static final double kElevatorUpSpeed = 0.8;
     public static final double kElevatorDownSpeed = -0.5;

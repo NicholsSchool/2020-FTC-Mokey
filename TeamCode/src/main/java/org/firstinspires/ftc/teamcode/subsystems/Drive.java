@@ -55,19 +55,27 @@ public class Drive {
         rBDrive.setPower(-speed);
     }
 
-    public boolean move(int position, double speed) {
-        lFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
+    public boolean move(int position, double power) {
         int currentPosition = (lFDrive.getCurrentPosition() + rFDrive.getCurrentPosition()) / 2;
 
-        speed *= currentPosition < position ? 1 : -1;
+        double speed = currentPosition < position ? power : -power;
 
         if(Math.abs(currentPosition - position) > Constants.kEncoderTargetMargin) {
-            lFDrive.setPower(speed);
-            lBDrive.setPower(speed);
-            rFDrive.setPower(speed);
-            rBDrive.setPower(speed);
+            move(speed, speed);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean strafe(int position, double power) {
+        int currentPosition = (lFDrive.getCurrentPosition() + rFDrive.getCurrentPosition()) / 2;
+
+        double speed = currentPosition < position ? power : -power;
+
+        if(Math.abs(currentPosition - position) > Constants.kEncoderTargetMargin) {
+            strafe(speed);
 
             return true;
         } else {
