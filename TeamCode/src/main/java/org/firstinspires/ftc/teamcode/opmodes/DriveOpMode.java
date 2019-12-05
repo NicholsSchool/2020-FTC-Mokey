@@ -27,13 +27,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
 import org.firstinspires.ftc.robotcore.external.Const;
+import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.Robot;
 
 /**
  * This file contains an example of an iterative (Non-Linear) "OpMode".
@@ -52,15 +54,13 @@ import org.firstinspires.ftc.robotcore.external.Const;
 @TeleOp(name="Drive OpMode")
 public class DriveOpMode extends OpMode
 {
-    private Robot robot;
-
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init() {
 
-        robot = new Robot(hardwareMap);
+        Robot.init(hardwareMap);
 
         telemetry.addData("Status", "Initialized");
     }
@@ -101,42 +101,42 @@ public class DriveOpMode extends OpMode
         }
 
         if(strafeSpeed != 0) {
-            robot.drive.strafe(strafeSpeed);
+            Robot.drive.strafe(strafeSpeed);
         } else {
             double lSpeed = -gamepad1.left_stick_y;
             double rSpeed = -gamepad1.right_stick_y;
 
-            robot.drive.move(lSpeed, rSpeed);
+            Robot.drive.move(lSpeed, rSpeed);
         }
 
         // Elevator control
         if(gamepad2.dpad_up) {
-            robot.elevator.move(Constants.kElevatorUpSpeed);
+            Robot.elevator.move(Constants.kElevatorUpSpeed);
         } else if(gamepad2.dpad_down) {
-            robot.elevator.move(Constants.kElevatorDownSpeed);
+            Robot.elevator.move(Constants.kElevatorDownSpeed);
         } else {
-            robot.elevator.move(0);
+            Robot.elevator.move(0);
         }
 
         // Turret control
         if(gamepad2.dpad_left) {
-            robot.turret.move(Constants.kTurretSpeed);
+            Robot.turret.move(Constants.kTurretSpeed);
         } else if(gamepad2.dpad_right) {
-            robot.turret.move(-Constants.kTurretSpeed);
+            Robot.turret.move(-Constants.kTurretSpeed);
         } else {
-            robot.turret.move(0);
+            Robot.turret.move(0);
         }
 
         // Folder control
         if(gamepad2.y) {
-            robot.folder.move(Constants.kFolderUpSpeed);
+            Robot.folder.move(Constants.kFolderUpSpeed);
         } else if(gamepad2.a) {
-            robot.folder.move(Constants.kFolderDownSpeed);
+            Robot.folder.move(Constants.kFolderDownSpeed);
         } else {
-            robot.folder.move(0);
+            Robot.folder.move(0);
         }
 
-        robot.elevator.debug(telemetry);
+        Robot.elevator.debug(telemetry);
     }
 
     /*
@@ -144,7 +144,7 @@ public class DriveOpMode extends OpMode
      */
     @Override
     public void stop() {
-        robot.stop();
+        Robot.stop();
     }
 
 }

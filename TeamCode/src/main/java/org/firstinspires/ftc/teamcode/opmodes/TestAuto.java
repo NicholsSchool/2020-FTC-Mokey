@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
+import org.firstinspires.ftc.teamcode.Robot;
 
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
@@ -67,25 +68,24 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 @Autonomous(name="Test Auto")
 public class TestAuto extends LinearOpMode {
 
-    private Robot robot;
 
 
     @Override
     public void runOpMode() {
-        robot = new Robot(hardwareMap);
+        Robot.init(hardwareMap);
         waitForStart();
 
 
-        while(robot.drive.move(1000, 1.0) && opModeIsActive()) {
-            robot.drive.debug(telemetry);
+        while(Robot.drive.move(1000, 1.0) && opModeIsActive()) {
+            Robot.drive.debug(telemetry);
         }
 
-        robot.drive.resetIMU();
-        while(robot.drive.turn(-90.0, 0.7) && opModeIsActive()) {
-            robot.drive.debug(telemetry);
+        Robot.imu.reset();
+        while(Robot.drive.turn(-90.0, 0.7) && opModeIsActive()) {
+            Robot.drive.debug(telemetry);
         }
 
-        robot.stop();
+        Robot.stop();
 
         sleep(2000);
     }
