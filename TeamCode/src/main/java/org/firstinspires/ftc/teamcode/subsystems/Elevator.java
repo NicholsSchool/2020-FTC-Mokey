@@ -43,11 +43,10 @@ public class Elevator {
 
     public void resetEncoder() {
         elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void stop() {
-        elevator.setPower(0);
+        move(0.0);
     }
 
     public void debug(Telemetry telemetry) {

@@ -12,6 +12,8 @@ public class Constants {
     public static final int kElevatorMin = -180;
 
     public static final double kTurretSpeed = 0.4;
+    public static final int kTurretMax = 2000;
+    public static final int kTurretMin = -2000;
 
     public static final double kFolderUpSpeed = 0.8;
     public static final double kFolderDownSpeed = -0.4;

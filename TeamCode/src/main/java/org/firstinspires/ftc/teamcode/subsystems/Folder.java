@@ -16,6 +16,6 @@ public class Folder {
     }
 
     public void stop() {
-        folder.setPower(0);
+        move(0.0);
     }
 }

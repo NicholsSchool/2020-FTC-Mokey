@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Constants;
 
 public class Turret {
 
@@ -15,11 +16,29 @@ public class Turret {
     }
 
     public void move(double speed) {
-        turret.setPower(speed);
+        turret.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        if(turret.getCurrentPosition() < Constants.kTurretMax && speed > 0) {
+            turret.setPower(speed);
+        } else if(turret.getCurrentPosition() > Constants.kTurretMin && speed < 0) {
+            turret.setPower(speed);
+        } else {
+            turret.setPower(0);
+        }
+    }
+
+    public void position(int position, double power) {
+        turret.setTargetPosition(position);
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(power);
+    }
+
+    public boolean isBusy() {
+        return turret.isBusy();
     }
 
     public void stop() {
-        turret.setPower(0);
+        move(0.0);
     }
 
     public void debug(Telemetry telemetry) {

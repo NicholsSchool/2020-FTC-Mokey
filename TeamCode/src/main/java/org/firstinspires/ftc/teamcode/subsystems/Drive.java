@@ -1,15 +1,13 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.Robot;
 
 public class Drive {
 
@@ -18,8 +16,6 @@ public class Drive {
     private DcMotor rFDrive;
     private DcMotorSimple rBDrive;
 
-    private BNO055IMU imu;
-    private float orientationZero;
 
     public Drive(HardwareMap hardwareMap) {
         lFDrive  = hardwareMap.get(DcMotor.class, "LFDrive");
@@ -35,17 +31,12 @@ public class Drive {
         lFDrive.setDirection(DcMotor.Direction.REVERSE);
         rBDrive.setDirection(DcMotor.Direction.REVERSE);
 
-
-        imu = hardwareMap.get(BNO055IMU.class, "IMU");
-
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        imu.initialize(parameters);
-
         resetEncoders();
     }
 
     public void move(double lSpeed, double rSpeed) {
+        lFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         lFDrive.setPower(lSpeed);
         lBDrive.setPower(lSpeed);
@@ -54,6 +45,9 @@ public class Drive {
     }
 
     public void strafe(double speed) {
+        lFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         // positive speed moves left
         lFDrive.setPower(speed);
         lBDrive.setPower(-speed);
@@ -62,6 +56,9 @@ public class Drive {
     }
 
     public boolean move(int position, double speed) {
+        lFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         int currentPosition = (lFDrive.getCurrentPosition() + rFDrive.getCurrentPosition()) / 2;
 
         speed *= currentPosition < position ? 1 : -1;
@@ -79,7 +76,10 @@ public class Drive {
     }
 
     public boolean turn(double angle, double speed) {
-        float currentAngle = (imu.getAngularOrientation().firstAngle - orientationZero) % 180;
+        lFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        double currentAngle = Robot.imu.getOrientation();
 
         speed *= currentAngle < angle ? 1 : -1;
 
@@ -98,19 +98,11 @@ public class Drive {
     public void resetEncoders() {
         lFDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rFDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-    public void resetIMU() {
-        orientationZero = imu.getAngularOrientation().firstAngle;
-    }
 
     public void stop() {
-        lFDrive.setPower(0);
-        lBDrive.setPower(0);
-        rFDrive.setPower(0);
-        rBDrive.setPower(0);
+        move(0.0, 0.0);
     }
 
     public void debug(Telemetry telemetry) {
@@ -118,9 +110,6 @@ public class Drive {
         telemetry.addData("LF power", lFDrive.getPower());
         telemetry.addData("LF isBusy", lFDrive.isBusy());
         telemetry.addData("RF position", rFDrive.getCurrentPosition());
-        telemetry.addData("IMU angle 1", imu.getAngularOrientation().firstAngle);
-        telemetry.addData("IMU angle 2", imu.getAngularOrientation().secondAngle);
-        telemetry.addData("IMU angle 3", imu.getAngularOrientation().thirdAngle);
         telemetry.update();
     }
 
