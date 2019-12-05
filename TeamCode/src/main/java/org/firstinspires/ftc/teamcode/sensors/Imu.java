@@ -23,7 +23,15 @@ public class Imu {
     }
 
     public double getOrientation() {
-        return (imu.getAngularOrientation().firstAngle - orientationZero) % 180;
+        double orientation = imu.getAngularOrientation().firstAngle - orientationZero;
+
+        if(orientation > 180) {
+            return orientation - 360;
+        } else if(orientation < -180) {
+            return orientation + 360;
+        } else {
+            return orientation;
+        }
     }
 
     public void debug(Telemetry telemetry) {
