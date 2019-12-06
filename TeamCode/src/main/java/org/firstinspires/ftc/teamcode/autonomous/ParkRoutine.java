@@ -8,10 +8,10 @@ import org.firstinspires.ftc.teamcode.Robot;
 public class ParkRoutine {
 
     public static void run(LinearOpMode opMode, String alliance) {
-        // Back up a foot
+        // Back up
         Robot.drive.resetEncoders();
         int ticks = (int)(-6 * Constants.kTicksPerInch);
-        while(Robot.drive.move(ticks, Constants.kAutoSpeed) && opMode.opModeIsActive()) {
+        while(Robot.drive.move(ticks, Constants.kDriveAutoSpeed) && opMode.opModeIsActive()) {
 
         }
         Robot.stop();
@@ -20,7 +20,7 @@ public class ParkRoutine {
         // Turn
         Robot.imu.reset();
         double angle = alliance.equals("red") ? -90.0 : 90.0;
-        while(Robot.drive.turn(angle, Constants.kAutoSpeed) && opMode.opModeIsActive()) {
+        while(Robot.drive.turn(angle, Constants.kDriveAutoSpeed) && opMode.opModeIsActive()) {
 
         }
         Robot.stop();
@@ -31,7 +31,7 @@ public class ParkRoutine {
         // Back up
         Robot.drive.resetEncoders();
         ticks = (int)(-18 * Constants.kTicksPerInch);
-        while(Robot.drive.move(ticks, Constants.kAutoSpeed) && opMode.opModeIsActive()) {
+        while(Robot.drive.move(ticks, Constants.kDriveAutoSpeed) && opMode.opModeIsActive()) {
 
         }
         Robot.stop();

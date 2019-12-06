@@ -32,9 +32,9 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
-
+import org.firstinspires.ftc.teamcode.autonomous.FoundationRoutine;
+import org.firstinspires.ftc.teamcode.autonomous.ParkRoutine;
 
 
 @Autonomous(name="Red Foundation Close")
@@ -48,105 +48,10 @@ public class RedFoundationCloseAuto extends LinearOpMode {
 
         waitForStart();
 
-        // Back up a foot
-        Robot.drive.resetEncoders();
-        int ticks = (int)(-6 * Constants.kTicksPerInch);
-        while(Robot.drive.move(ticks, Constants.kAutoSpeed) && opModeIsActive()) {
+        ParkRoutine.run(this, "red");
 
-        }
-        Robot.stop();
-        //
+        FoundationRoutine.run(this, "red");
 
-        // Turn
-        Robot.imu.reset();
-        while(Robot.drive.turn(-90.0, Constants.kAutoSpeed) && opModeIsActive()) {
-
-        }
-        Robot.stop();
-        //
-
-        // Unfold
-        while(!Robot.folderUp.isPressed() && opModeIsActive()) {
-            Robot.folder.move(Constants.kFolderUpSpeed);
-        }
-
-        Robot.elevator.move(Constants.kElevatorBelowJoint, Constants.kElevatorDownSpeed);
-        while(Robot.elevator.isBusy() && opModeIsActive()) {
-
-        }
-
-        while(!Robot.folderDown.isPressed() && opModeIsActive()) {
-            Robot.folder.move(Constants.kFolderDownSpeed);
-        }
-
-        Robot.stop();
-        //
-
-        // Back up to foundation
-        Robot.drive.resetEncoders();
-        ticks = (int)(-70 * Constants.kTicksPerInch);
-        while(Robot.drive.move(ticks, Constants.kAutoSpeed) && opModeIsActive()) {
-
-        }
-        Robot.stop();
-        //
-
-        // Turn towards foundation
-        Robot.imu.reset();
-        while(Robot.drive.turn(-90.0, Constants.kAutoSpeed) && opModeIsActive()) {
-
-        }
-        Robot.stop();
-        //
-
-        // Prepare to grab foundation
-        while(!Robot.folderUp.isPressed() && opModeIsActive()) {
-            Robot.folder.move(Constants.kFolderUpSpeed);
-        }
-
-        Robot.elevator.move(0, Constants.kElevatorUpSpeed);
-        while(Robot.elevator.isBusy() && opModeIsActive()) {
-
-        }
-
-        Robot.stop();
-        //
-
-        // Move towards foundation
-        Robot.drive.resetEncoders();
-        ticks = (int)(24 * Constants.kTicksPerInch);
-        while(Robot.drive.move(ticks, Constants.kAutoSpeed) && opModeIsActive()) {
-
-        }
-        Robot.stop();
-        //
-
-        // Elevator down
-        Robot.elevator.move(-220, Constants.kElevatorDownSpeed);
-        while(Robot.elevator.isBusy() && opModeIsActive()) {
-
-        }
-        Robot.stop();
-        //
-
-        // Open grabber
-        Robot.grabber.move(0.5);
-        sleep(1000);
-        Robot.stop();
-        //
-
-        // Drag foundation
-        Robot.elevator.move(Constants.kElevatorDownSpeed);
-        sleep(500);
-        Robot.stop();
-
-        Robot.drive.resetEncoders();
-        ticks = (int)(-38 * Constants.kTicksPerInch);
-        while(Robot.drive.move(ticks, Constants.kAutoSpeed) && opModeIsActive()) {
-            Robot.elevator.move(Constants.kElevatorDownSpeed);
-        }
-        Robot.stop();
-        //
     }
 
 }
