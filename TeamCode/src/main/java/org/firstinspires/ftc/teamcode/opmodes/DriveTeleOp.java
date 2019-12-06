@@ -33,23 +33,19 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
-import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 
 
-@TeleOp(name="Practice OpMode")
-public class PracticeOpMode extends OpMode
+@TeleOp(name="Drive")
+public class DriveTeleOp extends OpMode
 {
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init() {
-
         Robot.init(hardwareMap);
-        Robot.elevator.setExtremes(-10000, 10000);
-        Robot.turret.setExtremes(-530, 530);
 
         telemetry.addData("Status", "Initialized");
     }
@@ -97,6 +93,7 @@ public class PracticeOpMode extends OpMode
 
             Robot.drive.move(lSpeed, rSpeed);
         }
+        //
 
         // Elevator control
         if(gamepad2.dpad_up) {
@@ -104,8 +101,9 @@ public class PracticeOpMode extends OpMode
         } else if(gamepad2.dpad_down) {
             Robot.elevator.move(Constants.kElevatorDownSpeed);
         } else {
-            Robot.elevator.move(0);
+            Robot.elevator.move(0.0);
         }
+        //
 
         // Turret control
         if(gamepad2.dpad_left) {
@@ -113,8 +111,9 @@ public class PracticeOpMode extends OpMode
         } else if(gamepad2.dpad_right) {
             Robot.turret.move(-Constants.kTurretSpeed);
         } else {
-            Robot.turret.move(0);
+            Robot.turret.move(0.0);
         }
+        //
 
         // Folder control
         if(gamepad2.y) {
@@ -122,9 +121,11 @@ public class PracticeOpMode extends OpMode
         } else if(gamepad2.a) {
             Robot.folder.move(Constants.kFolderDownSpeed);
         } else {
-            Robot.folder.move(0);
+            Robot.folder.move(0.0);
         }
+        //
 
+        // Grabber control
         if(gamepad2.left_trigger > Constants.kTriggerThreshold) {
             Robot.grabber.move(Constants.kGrabberReleaseSpeed);
         } else if(gamepad2.right_trigger > Constants.kTriggerThreshold) {
@@ -132,6 +133,7 @@ public class PracticeOpMode extends OpMode
         } else {
             Robot.grabber.move(0.0);
         }
+        //
 
         Robot.elevator.debug(telemetry);
     }

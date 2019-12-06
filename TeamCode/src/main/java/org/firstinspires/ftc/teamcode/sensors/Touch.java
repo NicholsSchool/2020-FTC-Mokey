@@ -7,21 +7,20 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Touch {
 
-    private TouchSensor touch;
+    private TouchSensor mTouch;
 
-    // TODO: refactor instance variables
-    private String deviceName;
+    private String mDeviceName;
 
     public Touch(HardwareMap hardwareMap, String deviceName) {
-        touch = hardwareMap.get(TouchSensor.class, deviceName);
-        this.deviceName = deviceName;
+        mTouch = hardwareMap.get(TouchSensor.class, deviceName);
+        this.mDeviceName = deviceName;
     }
 
     public boolean isPressed() {
-        return touch.isPressed();
+        return mTouch.isPressed();
     }
 
     public void debug(Telemetry telemetry) {
-        telemetry.addData(deviceName, touch.isPressed());
+        telemetry.addData(mDeviceName, mTouch.isPressed());
     }
 }

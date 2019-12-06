@@ -36,7 +36,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 
 
 
-@Autonomous(name="Test Auto")
+@Autonomous(name="Test")
 public class TestAuto extends LinearOpMode {
 
 

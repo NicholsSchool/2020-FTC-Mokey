@@ -7,23 +7,23 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Imu {
 
-    private BNO055IMU imu;
-    private float orientationZero;
+    private BNO055IMU mImu;
+    private float mOrientationZero;
 
     public Imu(HardwareMap hardwareMap) {
-        imu = hardwareMap.get(BNO055IMU.class, "IMU");
+        mImu = hardwareMap.get(BNO055IMU.class, "IMU");
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        imu.initialize(parameters);
+        mImu.initialize(parameters);
     }
 
     public void reset() {
-        orientationZero = imu.getAngularOrientation().firstAngle;
+        mOrientationZero = mImu.getAngularOrientation().firstAngle;
     }
 
     public double getOrientation() {
-        double orientation = imu.getAngularOrientation().firstAngle - orientationZero;
+        double orientation = mImu.getAngularOrientation().firstAngle - mOrientationZero;
 
         if(orientation > 180) {
             return orientation - 360;
@@ -35,8 +35,8 @@ public class Imu {
     }
 
     public void debug(Telemetry telemetry) {
-        telemetry.addData("IMU angle 1", imu.getAngularOrientation().firstAngle);
-        telemetry.addData("IMU angle 2", imu.getAngularOrientation().secondAngle);
-        telemetry.addData("IMU angle 3", imu.getAngularOrientation().thirdAngle);
+        telemetry.addData("IMU angle 1", mImu.getAngularOrientation().firstAngle);
+        telemetry.addData("IMU angle 2", mImu.getAngularOrientation().secondAngle);
+        telemetry.addData("IMU angle 3", mImu.getAngularOrientation().thirdAngle);
     }
 }

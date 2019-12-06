@@ -32,13 +32,12 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 
 
 
-@Autonomous(name="Park Auto")
+@Autonomous(name="Park")
 public class ParkAuto extends LinearOpMode {
 
 
@@ -83,8 +82,6 @@ public class ParkAuto extends LinearOpMode {
         }
         Robot.stop();
         //
-
-        sleep(2000);
     }
 
 }
