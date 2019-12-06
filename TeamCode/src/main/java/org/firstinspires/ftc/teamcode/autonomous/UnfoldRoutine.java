@@ -9,13 +9,10 @@ public class UnfoldRoutine {
 
     public static void run(LinearOpMode opMode) {
 
-        Robot.grabber.move(-Constants.kGrabberClampAutoSpeed);
-        opMode.sleep(500);
-        Robot.stop();
-
         // Fold up
         while(!Robot.folderUp.isPressed() && opMode.opModeIsActive()) {
             Robot.folder.move(Constants.kFolderUpSpeed);
+            Robot.grabber.move(Constants.kGrabberClampAutoSpeed);
         }
         Robot.stop();
 

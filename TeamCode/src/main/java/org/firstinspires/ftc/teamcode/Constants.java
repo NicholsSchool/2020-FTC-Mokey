@@ -9,7 +9,7 @@ public class Constants {
     public static final double kFastStrafeSpeed = 1.0;
     public static final double kDriveAutoSpeed = 0.75;
     public static final double kDriveEqualizer = 0.95;
-    public static final double kTurnEqualizer = 0.45;
+    public static final double kTurnEqualizer = 0.65;
     public static final int kTicksPerDriveRotation = 1120;
     public static final double kDriveWheelDiameter = 3.92;
     public static final double kTicksPerInch = kTicksPerDriveRotation / (Math.PI * kDriveWheelDiameter);
@@ -20,7 +20,7 @@ public class Constants {
     public static final double kElevatorDownSpeed = -0.5;
     public static final int kElevatorMax = 170;
     public static final int kElevatorMin = -320;
-    public static final int kElevatorBelowJoint = -270;
+    public static final int kElevatorBelowJoint = -280;
 
 
     // Turret

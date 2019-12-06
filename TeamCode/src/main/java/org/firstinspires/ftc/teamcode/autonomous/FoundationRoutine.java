@@ -10,7 +10,7 @@ public class FoundationRoutine {
     public static void run(LinearOpMode opMode, String alliance) {
         // Back up to foundation
         Robot.drive.resetEncoders();
-        int ticks = (int)(-52 * Constants.kTicksPerInch);
+        int ticks = (int)(-48 * Constants.kTicksPerInch);
         while(Robot.drive.move(ticks, Constants.kDriveAutoSpeed) && opMode.opModeIsActive()) {
 
         }
@@ -32,7 +32,7 @@ public class FoundationRoutine {
         }
         Robot.stop();
 
-        Robot.elevator.move(0, Constants.kElevatorUpSpeed);
+        Robot.elevator.move(-150, Constants.kElevatorUpSpeed);
         while(Robot.elevator.isBusy() && opMode.opModeIsActive()) {
 
         }
@@ -41,7 +41,7 @@ public class FoundationRoutine {
 
         // Move towards foundation
         Robot.drive.resetEncoders();
-        ticks = (int)(24 * Constants.kTicksPerInch);
+        ticks = (int)(26 * Constants.kTicksPerInch);
         while(Robot.drive.move(ticks, Constants.kDriveAutoSpeed) && opMode.opModeIsActive()) {
 
         }
@@ -71,6 +71,21 @@ public class FoundationRoutine {
         ticks = (int)(-38 * Constants.kTicksPerInch);
         while(Robot.drive.move(ticks, Constants.kDriveAutoSpeed) && opMode.opModeIsActive()) {
             Robot.elevator.move(Constants.kElevatorDownSpeed);
+        }
+        Robot.stop();
+        //
+
+        // Elevator back up
+        Robot.elevator.move(-150, Constants.kElevatorUpSpeed);
+        while(Robot.elevator.isBusy() && opMode.opModeIsActive()) {
+
+        }
+        Robot.stop();
+        //
+
+        // Strafe out
+        while(Robot.drive.strafe(30, Constants.kDriveAutoSpeed) && opMode.opModeIsActive()) {
+
         }
         Robot.stop();
         //
