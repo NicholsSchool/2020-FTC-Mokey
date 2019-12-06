@@ -37,8 +37,8 @@ import org.firstinspires.ftc.teamcode.Robot;
 
 
 
-@Autonomous(name="Park")
-public class ParkAuto extends LinearOpMode {
+@Autonomous(name="Blue Park Close")
+public class BlueParkCloseAuto extends LinearOpMode {
 
 
 
@@ -50,8 +50,16 @@ public class ParkAuto extends LinearOpMode {
 
         // Back up a foot
         Robot.drive.resetEncoders();
-        int ticks = (int)(-12 * Constants.kTicksPerInch);
-        while(Robot.drive.move(ticks, 1.0) && opModeIsActive()) {
+        int ticks = (int)(-6 * Constants.kTicksPerInch);
+        while(Robot.drive.move(ticks, Constants.kAutoSpeed) && opModeIsActive()) {
+
+        }
+        Robot.stop();
+        //
+
+        // Turn
+        Robot.imu.reset();
+        while(Robot.drive.turn(90.0, Constants.kAutoSpeed) && opModeIsActive()) {
 
         }
         Robot.stop();
@@ -62,7 +70,7 @@ public class ParkAuto extends LinearOpMode {
             Robot.folder.move(Constants.kFolderUpSpeed);
         }
 
-        Robot.elevator.move(Constants.kElevatorMin, Constants.kElevatorDownSpeed);
+        Robot.elevator.move(Constants.kElevatorBelowJoint, Constants.kElevatorDownSpeed);
         while(Robot.elevator.isBusy() && opModeIsActive()) {
 
         }
@@ -74,14 +82,15 @@ public class ParkAuto extends LinearOpMode {
         Robot.stop();
         //
 
-        // Strafe to park
+        // Back up
         Robot.drive.resetEncoders();
-        ticks = (int)(36 * Constants.kTicksPerInch / Math.cos(Math.PI / 4));
-        while(Robot.drive.strafe(ticks, 1.0) && opModeIsActive()) {
+        ticks = (int)(-18 * Constants.kTicksPerInch);
+        while(Robot.drive.move(ticks, Constants.kAutoSpeed) && opModeIsActive()) {
 
         }
         Robot.stop();
         //
+
     }
 
 }

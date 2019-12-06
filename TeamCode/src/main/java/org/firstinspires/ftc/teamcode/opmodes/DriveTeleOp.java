@@ -126,13 +126,7 @@ public class DriveTeleOp extends OpMode
         //
 
         // Grabber control
-        if(gamepad2.left_trigger > Constants.kTriggerThreshold) {
-            Robot.grabber.move(Constants.kGrabberReleaseSpeed);
-        } else if(gamepad2.right_trigger > Constants.kTriggerThreshold) {
-            Robot.grabber.move(Constants.kGrabberClampSpeed);
-        } else {
-            Robot.grabber.move(0.0);
-        }
+        Robot.grabber.move(0.5 * gamepad2.left_trigger - gamepad2.right_trigger);
         //
 
         Robot.elevator.debug(telemetry);

@@ -37,30 +37,60 @@ import org.firstinspires.ftc.teamcode.Robot;
 
 
 
-@Autonomous(name="Test")
-public class TestAuto extends LinearOpMode {
+@Autonomous(name="Red Park Close Old")
+public class RedParkCloseOldAuto extends LinearOpMode {
 
 
 
     @Override
     public void runOpMode() {
         Robot.init(hardwareMap);
+
         waitForStart();
 
+        // Back up a foot
+        Robot.drive.resetEncoders();
+        int ticks = (int)(-6 * Constants.kTicksPerInch);
+        while(Robot.drive.move(ticks, Constants.kAutoSpeed) && opModeIsActive()) {
 
-        int ticks = (int)(-24 * Constants.kTicksPerInch);
-        while(Robot.drive.strafe(ticks, 0.7) && opModeIsActive()) {
-            Robot.drive.debug(telemetry);
+        }
+        Robot.stop();
+        //
+
+        // Turn
+        Robot.imu.reset();
+        while(Robot.drive.turn(-90.0, Constants.kAutoSpeed) && opModeIsActive()) {
+
+        }
+        Robot.stop();
+        //
+
+        // Unfold
+        while(!Robot.folderUp.isPressed() && opModeIsActive()) {
+            Robot.folder.move(Constants.kFolderUpSpeed);
         }
 
-//        Robot.imu.reset();
-//        while(Robot.drive.turn(-90.0, 0.7) && opModeIsActive()) {
-//            Robot.drive.debug(telemetry);
-//        }
+        Robot.elevator.move(Constants.kElevatorBelowJoint, Constants.kElevatorDownSpeed);
+        while(Robot.elevator.isBusy() && opModeIsActive()) {
+
+        }
+
+        while(!Robot.folderDown.isPressed() && opModeIsActive()) {
+            Robot.folder.move(Constants.kFolderDownSpeed);
+        }
 
         Robot.stop();
+        //
 
-        sleep(2000);
+        // Back up
+        Robot.drive.resetEncoders();
+        ticks = (int)(-18 * Constants.kTicksPerInch);
+        while(Robot.drive.move(ticks, Constants.kAutoSpeed) && opModeIsActive()) {
+
+        }
+        Robot.stop();
+        //
+
     }
 
 }

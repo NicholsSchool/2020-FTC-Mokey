@@ -40,8 +40,8 @@ public class Drive {
 
         mLFDrive.setPower(lSpeed);
         mLBDrive.setPower(lSpeed);
-        mRFDrive.setPower(rSpeed);
-        mRBDrive.setPower(rSpeed);
+        mRFDrive.setPower(rSpeed * Constants.kDriveEqualizer);
+        mRBDrive.setPower(rSpeed * Constants.kDriveEqualizer);
     }
 
     public void strafe(double speed) {
@@ -92,8 +92,8 @@ public class Drive {
         double speed = currentAngle < angle ? power : -power;
 
         if(Math.abs(currentAngle - angle) > Constants.kAngleTargetMargin) {
-            mLFDrive.setPower(-speed);
-            mLBDrive.setPower(-speed);
+            mLFDrive.setPower(-speed * Constants.kTurnEqualizer);
+            mLBDrive.setPower(-speed * Constants.kTurnEqualizer);
             mRFDrive.setPower(speed);
             mRBDrive.setPower(speed);
 
