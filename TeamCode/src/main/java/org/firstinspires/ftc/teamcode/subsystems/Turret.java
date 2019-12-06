@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Constants;
 
@@ -10,9 +11,16 @@ public class Turret {
 
     private DcMotor turret;
 
+    private int min;
+    private int max;
+
     public Turret(HardwareMap hardwareMap) {
         turret = hardwareMap.get(DcMotor.class, "Turret");
         turret.resetDeviceConfigurationForOpMode();
+        turret.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        min = Constants.kTurretMin;
+        max = Constants.kTurretMax;
 
         resetEncoder();
     }
@@ -20,9 +28,9 @@ public class Turret {
     public void move(double speed) {
         turret.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        if(turret.getCurrentPosition() < Constants.kTurretMax && speed > 0) {
+        if(turret.getCurrentPosition() < max && speed > 0) {
             turret.setPower(speed);
-        } else if(turret.getCurrentPosition() > Constants.kTurretMin && speed < 0) {
+        } else if(turret.getCurrentPosition() > min && speed < 0) {
             turret.setPower(speed);
         } else {
             turret.setPower(0);
@@ -33,6 +41,11 @@ public class Turret {
         turret.setTargetPosition(position);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(power);
+    }
+
+    public void setExtremes(int min, int max) {
+        this.min = min;
+        this.max = max;
     }
 
     public boolean isBusy() {

@@ -38,8 +38,8 @@ import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 
 
-@TeleOp(name="Drive OpMode")
-public class DriveOpMode extends OpMode
+@TeleOp(name="Practice OpMode")
+public class PracticeOpMode extends OpMode
 {
     /*
      * Code to run ONCE when the driver hits INIT
@@ -48,6 +48,8 @@ public class DriveOpMode extends OpMode
     public void init() {
 
         Robot.init(hardwareMap);
+        Robot.elevator.setExtremes(-10000, 10000);
+        Robot.turret.setExtremes(-530, 530);
 
         telemetry.addData("Status", "Initialized");
     }
@@ -123,7 +125,15 @@ public class DriveOpMode extends OpMode
             Robot.folder.move(0);
         }
 
-        Robot.drive.debug(telemetry);
+        if(gamepad2.left_trigger > Constants.kTriggerThreshold) {
+            Robot.grabber.move(Constants.kGrabberReleaseSpeed);
+        } else if(gamepad2.right_trigger > Constants.kTriggerThreshold) {
+            Robot.grabber.move(Constants.kGrabberClampSpeed);
+        } else {
+            Robot.grabber.move(0.0);
+        }
+
+        Robot.elevator.debug(telemetry);
     }
 
     /*

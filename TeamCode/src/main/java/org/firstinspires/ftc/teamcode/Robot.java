@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.sensors.Touch;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.Elevator;
 import org.firstinspires.ftc.teamcode.subsystems.Folder;
+import org.firstinspires.ftc.teamcode.subsystems.Grabber;
 import org.firstinspires.ftc.teamcode.subsystems.Turret;
 
 public class Robot {
@@ -15,6 +16,7 @@ public class Robot {
     public static Elevator elevator;
     public static Turret turret;
     public static Folder folder;
+    public static Grabber grabber;
 
     public static Imu imu;
 
@@ -26,6 +28,7 @@ public class Robot {
         elevator = new Elevator(hardwareMap);
         turret = new Turret(hardwareMap);
         folder = new Folder(hardwareMap);
+        grabber = new Grabber(hardwareMap);
 
         imu = new Imu(hardwareMap);
 
@@ -38,5 +41,6 @@ public class Robot {
         elevator.stop();
         turret.stop();
         folder.stop();
+        grabber.stop();
     }
 }
