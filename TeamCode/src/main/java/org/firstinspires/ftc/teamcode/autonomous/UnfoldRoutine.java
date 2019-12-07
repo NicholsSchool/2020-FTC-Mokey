@@ -5,8 +5,15 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 
+/**
+ * An auto routine to unfold from the starting configuration of Mokey.
+ */
 public class UnfoldRoutine {
 
+    /**
+     * Runs the routine.
+     * @param opMode the OpMode running the routine
+     */
     public static void run(LinearOpMode opMode) {
 
         // Fold up

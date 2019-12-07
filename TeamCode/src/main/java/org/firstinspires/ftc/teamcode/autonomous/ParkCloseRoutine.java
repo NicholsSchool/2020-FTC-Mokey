@@ -5,8 +5,16 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 
-public class ParkRoutine {
+/**
+ * An auto routine to park from the close position in the loading zone.
+ */
+public class ParkCloseRoutine {
 
+    /**
+     * Runs the routine.
+     * @param opMode the OpMode running the routine
+     * @param alliance the current alliance
+     */
     public static void run(LinearOpMode opMode, String alliance) {
         // Back up
         Robot.drive.resetEncoders();

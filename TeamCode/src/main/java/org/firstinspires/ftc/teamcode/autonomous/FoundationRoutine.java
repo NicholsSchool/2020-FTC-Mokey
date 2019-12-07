@@ -5,8 +5,16 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 
+/**
+ * An auto routine to move the foundation from a parked position.
+ */
 public class FoundationRoutine {
 
+    /**
+     * Runs the routine.
+     * @param opMode the OpMode running the routine
+     * @param alliance the current alliance
+     */
     public static void run(LinearOpMode opMode, String alliance) {
         // Back up to foundation
         Robot.drive.resetEncoders();
@@ -75,19 +83,5 @@ public class FoundationRoutine {
         Robot.stop();
         //
 
-        // Elevator back up
-        Robot.elevator.move(-150, Constants.kElevatorUpSpeed);
-        while(Robot.elevator.isBusy() && opMode.opModeIsActive()) {
-
-        }
-        Robot.stop();
-        //
-
-        // Strafe out
-        while(Robot.drive.strafe(30, Constants.kDriveAutoSpeed) && opMode.opModeIsActive()) {
-
-        }
-        Robot.stop();
-        //
     }
 }

@@ -9,6 +9,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Constants;
 import org.firstinspires.ftc.teamcode.Robot;
 
+/**
+ * Drive controls the drive train of Mokey.
+ */
 public class Drive {
 
     private DcMotor mLFDrive;
@@ -17,6 +20,10 @@ public class Drive {
     private DcMotorSimple mRBDrive;
 
 
+    /**
+     * Creates a drive train with the default state at the beginning of an OpMode.
+     * @param hardwareMap the hardware map of Mokey.
+     */
     public Drive(HardwareMap hardwareMap) {
         mLFDrive = hardwareMap.get(DcMotor.class, "LFDrive");
         mLBDrive = hardwareMap.get(DcMotorSimple.class, "LBDrive");
@@ -34,6 +41,11 @@ public class Drive {
         resetEncoders();
     }
 
+    /**
+     * Tank drive.
+     * @param lSpeed speed of the left motors, in the range [-1.0, 1.0]
+     * @param rSpeed speed of the right motors, in the range [-1.0, 1.0]
+     */
     public void move(double lSpeed, double rSpeed) {
         mLFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         mRFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -44,6 +56,10 @@ public class Drive {
         mRBDrive.setPower(rSpeed * Constants.kDriveEqualizer);
     }
 
+    /**
+     * Mecanum strafe horizontally.
+     * @param speed speed of the strafe, in the range [-1.0, 1.0], a positive speed moves left
+     */
     public void strafe(double speed) {
         mLFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         mRFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -55,6 +71,12 @@ public class Drive {
         mRBDrive.setPower(-speed);
     }
 
+    /**
+     * Drives straight to a position with encoders.
+     * @param position the target encoder position
+     * @param power the power of the motors, in the range [0.0, 1.0]
+     * @return true if the robot is still moving towards the target, false if the robot is at the target
+     */
     public boolean move(int position, double power) {
         int currentPosition = (mLFDrive.getCurrentPosition() + mRFDrive.getCurrentPosition()) / 2;
 
@@ -69,6 +91,12 @@ public class Drive {
         }
     }
 
+    /**
+     * Strafes to a position with encoders.
+     * @param position the target encoder position, positive is to the left
+     * @param power the power of the motors, in the range [0.0, 1.0]
+     * @return true if the robot is still moving towards the target, false if the robot is at the target
+     */
     public boolean strafe(int position, double power) {
         int currentPosition = (mLFDrive.getCurrentPosition() + mRFDrive.getCurrentPosition()) / 2;
 
@@ -83,6 +111,12 @@ public class Drive {
         }
     }
 
+    /**
+     * Turns in place to a position with the IMU.
+     * @param angle the target angle, positive is counterclockwise
+     * @param power the power of the motors, in the range [0.0, 1.0]
+     * @return true if the robot is still moving towards the target, false if the robot is at the target
+     */
     public boolean turn(double angle, double power) {
         mLFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         mRFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -103,16 +137,25 @@ public class Drive {
         }
     }
 
+    /**
+     * Resets the drive encoders.
+     */
     public void resetEncoders() {
         mLFDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         mRFDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-
+    /**
+     * Soft stops the drive train.
+     */
     public void stop() {
         move(0.0, 0.0);
     }
 
+    /**
+     * Adds debug values to the telemetry.
+     * @param telemetry the current telemetry
+     */
     public void debug(Telemetry telemetry) {
         telemetry.addData("LF position", mLFDrive.getCurrentPosition());
         telemetry.addData("LF power", mLFDrive.getPower());

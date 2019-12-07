@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
+/**
+ * Constants contains constants for key sensor values and motor speeds.
+ */
 public class Constants {
     // Controls
     public static final double kTriggerThreshold = 0.5;
@@ -17,7 +20,7 @@ public class Constants {
 
     // Elevator
     public static final double kElevatorUpSpeed = 1.0;
-    public static final double kElevatorDownSpeed = -0.5;
+    public static final double kElevatorDownSpeed = -1.0;
     public static final int kElevatorMax = 170;
     public static final int kElevatorMin = -320;
     public static final int kElevatorBelowJoint = -280;
