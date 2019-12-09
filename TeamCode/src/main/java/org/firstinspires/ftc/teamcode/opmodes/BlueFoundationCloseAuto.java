@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.autonomous.FoundationRoutine;
 import org.firstinspires.ftc.teamcode.autonomous.ParkCloseRoutine;
-import org.firstinspires.ftc.teamcode.autonomous.ParkCloseRoutine;
 
 /**
  * An auto OpMode for moving the foundation from the close loading zone position while on the blue alliance.
@@ -24,7 +23,7 @@ public class BlueFoundationCloseAuto extends LinearOpMode {
 
         waitForStart();
 
-        ParkCloseRoutine.run(this, "blue");
+        ParkCloseRoutine.run(this, "blue", "loading", "side");
 
         FoundationRoutine.run(this, "blue");
 

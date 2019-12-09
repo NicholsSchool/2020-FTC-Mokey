@@ -9,10 +9,10 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.autonomous.ParkCloseRoutine;
 
 /**
- * An auto OpMode for parking from the close loading zone position while on the red alliance.
+ * An auto OpMode for parking from the close loading zone position while on the blue alliance.
  */
-@Autonomous(name="Red Park Close")
-public class RedParkCloseAuto extends LinearOpMode {
+@Autonomous(name="Blue Park Loading Wall Close")
+public class BlueParkLoadingWallCloseAuto extends LinearOpMode {
 
 
     /**
@@ -24,7 +24,7 @@ public class RedParkCloseAuto extends LinearOpMode {
 
         waitForStart();
 
-        ParkCloseRoutine.run(this, "red");
+        ParkCloseRoutine.run(this, "blue", "loading", "wall");
 
     }
 

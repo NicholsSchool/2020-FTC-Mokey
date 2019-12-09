@@ -11,8 +11,8 @@ import org.firstinspires.ftc.teamcode.autonomous.ParkCloseRoutine;
 /**
  * An auto OpMode for parking from the close loading zone position while on the blue alliance.
  */
-@Autonomous(name="Blue Park Close")
-public class BlueParkCloseAuto extends LinearOpMode {
+@Autonomous(name="Red Park Building Center Close")
+public class RedParkBuildingCenterCloseAuto extends LinearOpMode {
 
 
     /**
@@ -24,7 +24,7 @@ public class BlueParkCloseAuto extends LinearOpMode {
 
         waitForStart();
 
-        ParkCloseRoutine.run(this, "blue");
+        ParkCloseRoutine.run(this, "red", "building", "center");
 
     }
 

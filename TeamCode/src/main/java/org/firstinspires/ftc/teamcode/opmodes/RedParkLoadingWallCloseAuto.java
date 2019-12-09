@@ -6,14 +6,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Robot;
-import org.firstinspires.ftc.teamcode.autonomous.FoundationRoutine;
 import org.firstinspires.ftc.teamcode.autonomous.ParkCloseRoutine;
 
 /**
- * An auto OpMode for moving the foundation from the close loading zone position while on the red alliance.
+ * An auto OpMode for parking from the close loading zone position while on the red alliance.
  */
-@Autonomous(name="Red Foundation Close")
-public class RedFoundationCloseAuto extends LinearOpMode {
+@Autonomous(name="Red Park Loading Wall Close")
+public class RedParkLoadingWallCloseAuto extends LinearOpMode {
 
 
     /**
@@ -25,9 +24,7 @@ public class RedFoundationCloseAuto extends LinearOpMode {
 
         waitForStart();
 
-        ParkCloseRoutine.run(this, "red", "loading", "center");
-
-        FoundationRoutine.run(this, "red");
+        ParkCloseRoutine.run(this, "red", "loading", "wall");
 
     }
 

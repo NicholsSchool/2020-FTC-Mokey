@@ -49,7 +49,7 @@ public class FoundationRoutine {
 
         // Move towards foundation
         Robot.drive.resetEncoders();
-        ticks = (int)(26 * Constants.kTicksPerInch);
+        ticks = (int)(18 * Constants.kTicksPerInch);
         while(Robot.drive.move(ticks, Constants.kDriveAutoSpeed) && opMode.opModeIsActive()) {
 
         }

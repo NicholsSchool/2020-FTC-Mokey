@@ -49,14 +49,25 @@ public class DriveTeleOp extends OpMode
 
         // Tank drive and strafe
         double strafeSpeed;
+//        if(gamepad1.left_bumper) {
+//            strafeSpeed = Constants.kSlowStrafeSpeed;
+//        } else if(gamepad1.right_bumper) {
+//            strafeSpeed = -Constants.kSlowStrafeSpeed;
+//        } else if(gamepad1.left_trigger > Constants.kTriggerThreshold) {
+//            strafeSpeed = Constants.kFastStrafeSpeed;
+//        } else if(gamepad1.right_trigger > Constants.kTriggerThreshold) {
+//            strafeSpeed = -Constants.kFastStrafeSpeed;
+//        } else {
+//            strafeSpeed = 0;
+//        }
         if(gamepad1.left_bumper) {
-            strafeSpeed = Constants.kSlowStrafeSpeed;
-        } else if(gamepad1.right_bumper) {
-            strafeSpeed = -Constants.kSlowStrafeSpeed;
-        } else if(gamepad1.left_trigger > Constants.kTriggerThreshold) {
             strafeSpeed = Constants.kFastStrafeSpeed;
-        } else if(gamepad1.right_trigger > Constants.kTriggerThreshold) {
+        } else if(gamepad1.right_bumper) {
             strafeSpeed = -Constants.kFastStrafeSpeed;
+        } else if(gamepad1.left_trigger > 0) {
+            strafeSpeed = gamepad1.left_trigger;
+        } else if(gamepad1.right_trigger > 0) {
+            strafeSpeed = -gamepad1.right_trigger;
         } else {
             strafeSpeed = 0;
         }

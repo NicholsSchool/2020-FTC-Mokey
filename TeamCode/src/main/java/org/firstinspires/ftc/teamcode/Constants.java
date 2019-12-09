@@ -16,14 +16,15 @@ public class Constants {
     public static final int kTicksPerDriveRotation = 1120;
     public static final double kDriveWheelDiameter = 3.92;
     public static final double kTicksPerInch = kTicksPerDriveRotation / (Math.PI * kDriveWheelDiameter);
+    public static final double kStrafeEqualizer = 0.85;
 
 
     // Elevator
     public static final double kElevatorUpSpeed = 1.0;
     public static final double kElevatorDownSpeed = -1.0;
-    public static final int kElevatorMax = 170;
-    public static final int kElevatorMin = -320;
-    public static final int kElevatorBelowJoint = -280;
+    public static final int kElevatorMax = 100;
+    public static final int kElevatorMin = -370;
+    public static final int kElevatorBelowJoint = -350;
 
 
     // Turret

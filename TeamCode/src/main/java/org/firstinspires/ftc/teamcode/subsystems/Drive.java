@@ -65,9 +65,9 @@ public class Drive {
         mRFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // positive speed moves left
-        mLFDrive.setPower(speed);
+        mLFDrive.setPower(speed * Constants.kStrafeEqualizer);
         mLBDrive.setPower(-speed);
-        mRFDrive.setPower(speed);
+        mRFDrive.setPower(speed * Constants.kStrafeEqualizer);
         mRBDrive.setPower(-speed);
     }
 
@@ -78,7 +78,7 @@ public class Drive {
      * @return true if the robot is still moving towards the target, false if the robot is at the target
      */
     public boolean move(int position, double power) {
-        int currentPosition = (mLFDrive.getCurrentPosition() + mRFDrive.getCurrentPosition()) / 2;
+        int currentPosition = mLFDrive.getCurrentPosition() > mRFDrive.getCurrentPosition() ? mLFDrive.getCurrentPosition() : mRFDrive.getCurrentPosition();
 
         double speed = currentPosition < position ? power : -power;
 
@@ -130,6 +130,29 @@ public class Drive {
             mLBDrive.setPower(-speed * Constants.kTurnEqualizer);
             mRFDrive.setPower(speed);
             mRBDrive.setPower(speed);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean turn(double angle, double power, String side) {
+        mLFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        mRFDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        double currentAngle = Robot.imu.getOrientation();
+
+        double speed = currentAngle < angle ? power : -power;
+
+        if(Math.abs(currentAngle - angle) > Constants.kAngleTargetMargin) {
+            if(side.equals("left")) {
+                mLFDrive.setPower(-speed * Constants.kTurnEqualizer);
+                mLBDrive.setPower(-speed * Constants.kTurnEqualizer);
+            } else {
+                mRFDrive.setPower(speed);
+                mRBDrive.setPower(speed);
+            }
 
             return true;
         } else {
