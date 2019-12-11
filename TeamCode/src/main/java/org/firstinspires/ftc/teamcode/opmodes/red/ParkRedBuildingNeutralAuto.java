@@ -1,18 +1,18 @@
 
 
-package org.firstinspires.ftc.teamcode.opmodes;
+package org.firstinspires.ftc.teamcode.opmodes.red;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Robot;
-import org.firstinspires.ftc.teamcode.autonomous.ParkCloseRoutine;
+import org.firstinspires.ftc.teamcode.autonomous.ParkRoutine;
 
 /**
  * An auto OpMode for parking from the close loading zone position while on the blue alliance.
  */
-@Autonomous(name="Blue Park Building Center Close")
-public class BlueParkBuildingCenterCloseAuto extends LinearOpMode {
+@Autonomous(name="ParkRedBuildingNeutralAuto")
+public class ParkRedBuildingNeutralAuto extends LinearOpMode {
 
 
     /**
@@ -21,10 +21,11 @@ public class BlueParkBuildingCenterCloseAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
         Robot.init(hardwareMap);
+        String[] args = getClass().getSimpleName().split("(?<=[a-z])(?=[A-Z])"); // split class name for args
 
         waitForStart();
 
-        ParkCloseRoutine.run(this, "blue", "building", "center");
+        ParkRoutine.run(this, args[1], args[2], args[3]);
 
     }
 

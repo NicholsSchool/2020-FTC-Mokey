@@ -4,9 +4,7 @@ package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
-import org.firstinspires.ftc.teamcode.Constants;
-import org.firstinspires.ftc.teamcode.Robot;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
 /**
@@ -21,23 +19,18 @@ public class TestAuto extends LinearOpMode {
      */
     @Override
     public void runOpMode() {
-        Robot.init(hardwareMap);
+        DcMotorSimple servo1 = hardwareMap.get(DcMotorSimple.class, "Servo1");
+        DcMotorSimple servo2 = hardwareMap.get(DcMotorSimple.class, "Servo2");
+
         waitForStart();
 
+        servo1.setPower(-1.0);
+        servo2.setPower(1.0);
 
-        int ticks = (int)(-24 * Constants.kTicksPerInch);
-        while(Robot.drive.strafe(ticks, 0.7) && opModeIsActive()) {
-            Robot.drive.debug(telemetry);
-        }
+        sleep(29000);
 
-//        Robot.imu.reset();
-//        while(Robot.drive.turn(-90.0, 0.7) && opModeIsActive()) {
-//            Robot.drive.debug(telemetry);
-//        }
-
-        Robot.stop();
-
-        sleep(2000);
+        servo1.setPower(0);
+        servo2.setPower(0);
     }
 
 }

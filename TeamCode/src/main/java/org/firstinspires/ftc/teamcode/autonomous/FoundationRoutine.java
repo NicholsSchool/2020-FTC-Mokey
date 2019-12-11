@@ -27,7 +27,7 @@ public class FoundationRoutine {
 
         // Turn towards foundation
         Robot.imu.reset();
-        double angle = alliance.equals("red") ? -90.0 : 90.0;
+        double angle = alliance.equals("Red") ? -90.0 : 90.0;
         while(Robot.drive.turn(angle, Constants.kDriveAutoSpeed) && opMode.opModeIsActive()) {
 
         }

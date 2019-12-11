@@ -5,11 +5,10 @@ package org.firstinspires.ftc.teamcode;
  */
 public class Constants {
     // Controls
+    public static double driverSpeedMultiplier = 1.0;
     public static final double kTriggerThreshold = 0.5;
 
     // Drive
-    public static final double kSlowStrafeSpeed = 0.5;
-    public static final double kFastStrafeSpeed = 1.0;
     public static final double kDriveAutoSpeed = 0.75;
     public static final double kDriveEqualizer = 0.95;
     public static final double kTurnEqualizer = 0.65;

@@ -47,24 +47,17 @@ public class DriveTeleOp extends OpMode
     @Override
     public void loop() {
 
+        // Fast and slow modes for driver
+        if(gamepad1.left_bumper) {
+            Constants.driverSpeedMultiplier = 1.0;
+        } else if(gamepad1.right_bumper) {
+            Constants.driverSpeedMultiplier = 0.5;
+        }
+        //
+
         // Tank drive and strafe
         double strafeSpeed;
-//        if(gamepad1.left_bumper) {
-//            strafeSpeed = Constants.kSlowStrafeSpeed;
-//        } else if(gamepad1.right_bumper) {
-//            strafeSpeed = -Constants.kSlowStrafeSpeed;
-//        } else if(gamepad1.left_trigger > Constants.kTriggerThreshold) {
-//            strafeSpeed = Constants.kFastStrafeSpeed;
-//        } else if(gamepad1.right_trigger > Constants.kTriggerThreshold) {
-//            strafeSpeed = -Constants.kFastStrafeSpeed;
-//        } else {
-//            strafeSpeed = 0;
-//        }
-        if(gamepad1.left_bumper) {
-            strafeSpeed = Constants.kFastStrafeSpeed;
-        } else if(gamepad1.right_bumper) {
-            strafeSpeed = -Constants.kFastStrafeSpeed;
-        } else if(gamepad1.left_trigger > 0) {
+        if(gamepad1.left_trigger > 0) {
             strafeSpeed = gamepad1.left_trigger;
         } else if(gamepad1.right_trigger > 0) {
             strafeSpeed = -gamepad1.right_trigger;
@@ -73,10 +66,10 @@ public class DriveTeleOp extends OpMode
         }
 
         if(strafeSpeed != 0) {
-            Robot.drive.strafe(strafeSpeed);
+            Robot.drive.strafe(strafeSpeed * Constants.driverSpeedMultiplier);
         } else {
-            double lSpeed = -gamepad1.left_stick_y;
-            double rSpeed = -gamepad1.right_stick_y;
+            double lSpeed = -gamepad1.left_stick_y * Constants.driverSpeedMultiplier;
+            double rSpeed = -gamepad1.right_stick_y * Constants.driverSpeedMultiplier;
 
             Robot.drive.move(lSpeed, rSpeed);
         }

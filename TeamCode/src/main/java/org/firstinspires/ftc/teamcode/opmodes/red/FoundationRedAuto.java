@@ -1,17 +1,16 @@
-package org.firstinspires.ftc.teamcode.opmodes;
+package org.firstinspires.ftc.teamcode.opmodes.red;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.autonomous.FoundationRoutine;
-import org.firstinspires.ftc.teamcode.autonomous.ParkCloseRoutine;
 
 /**
  * An auto OpMode for moving the foundation from the close loading zone position while on the blue alliance.
  */
-@Autonomous(name="Blue Foundation Close")
-public class BlueFoundationCloseAuto extends LinearOpMode {
+@Autonomous(name="FoundationRedAuto")
+public class FoundationRedAuto extends LinearOpMode {
 
 
     /**
@@ -20,12 +19,11 @@ public class BlueFoundationCloseAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
         Robot.init(hardwareMap);
+        String[] args = getClass().getSimpleName().split("(?<=[a-z])(?=[A-Z])"); // split class name for args
 
         waitForStart();
 
-        ParkCloseRoutine.run(this, "blue", "loading", "side");
-
-        FoundationRoutine.run(this, "blue");
+        FoundationRoutine.run(this, args[1]);
 
     }
 
